@@ -22,12 +22,11 @@ jobs:
       run: |
         git clone https://github.com/armbian/build.git
         cd build
-        # Ajuste o caminho aqui conforme a localização do seu arquivo de configuração
-        cp ../linux-rk322x-legacy.config config/kernel/linux-rk322x-legacy.config
+        cp config/kernel/linux-rk322x-legacy.config config/kernel/linux-rk322x-legacy.config
         ./compile.sh EXPERT="yes" CLEAN_LEVEL="none" KERNEL_ONLY="no" KERNEL_CONFIGURE="no"
     
     - name: Upload compiled image
       uses: actions/upload-artifact@v3
       with:
         name: armbian-image
-        path: ./build/output/images/
+        path: ./output/images/
