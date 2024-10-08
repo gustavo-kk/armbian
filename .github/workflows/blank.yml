@@ -22,7 +22,7 @@ jobs:
       run: |
         git clone https://github.com/armbian/build.git
         cd build
-        cp config/kernel/linux-rk322x-legacy.config config/kernel/  # Supondo que o arquivo esteja neste caminho
+        # Execute a compilação usando o arquivo de configuração que já está no repositório
         ./compile.sh EXPERT="yes" CLEAN_LEVEL="none" KERNEL_ONLY="no" KERNEL_CONFIGURE="no"
     
     - name: Upload compiled image
