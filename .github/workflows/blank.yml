@@ -29,7 +29,7 @@ jobs:
         cp ../build/config/kernel/linux-rk322x-legacy.config .config
 
         # Execute a compilação não interativa
-        ./compile.sh EXPERT="yes" CLEAN_LEVEL="none" KERNEL_ONLY="no" KERNEL_CONFIGURE="no" BRANCH="${BOARD}" CONFIGURE_ONLY="no"  # Isso deve evitar a interação
+        ./compile.sh EXPERT="yes" CLEAN_LEVEL="none" KERNEL_ONLY="no" KERNEL_CONFIGURE="no" BRANCH="${BOARD}" CONFIGURE_ONLY="no" BOARD="${BOARD}"  # Isso deve evitar a interação
     
     - name: Upload compiled image
       uses: actions/upload-artifact@v3
