@@ -24,7 +24,7 @@ jobs:
         cd build
         export BOARD=rk322x-box  # Defina a placa aqui
         export RELEASE=focal  # Defina a base como focal (Ubuntu 20.04)
-        export KERNEL_TARGET="current,edge"  # Altere se necessário
+        export KERNEL_TARGET="legacy"  # Altere se necessário
         export BUILD_TYPE="server"  # Definindo que é para servidor
 
         # Execute a compilação não interativa
