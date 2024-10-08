@@ -1,25 +1,33 @@
-name: Build Armbian
+name: Compile Armbian Image
 
 on:
   push:
     branches:
-      - main
+      - main  # Define em qual branch o workflow será acionado
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Executa em uma máquina com Ubuntu mais recente
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3  # Atualizado para a versão 3
 
-      - name: Clone Armbian build repo
-        run: |
-          git clone https://github.com/armbian/build.git
-          cd build
-          # Defina a placa e outras variáveis de ambiente
-          export BOARD=rk329a
-          export BRANCH=main  # ou outra branch, se necessário
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y git curl unzip make gcc
 
-      - name: Build kernel
-        run: |
-          ./compile.sh EXPERT="yes" CLEAN_LEVEL="none" KERNEL_ONLY="no" KERNEL_CONFIGURE="no"
+    - name: Clone Armbian Build Repository
+      run: |
+        git clone https://github.com/armbian/build.git
+        cd build
+        export BOARD=rk322x-box.tvb  # Defina a placa aqui
+        export BRANCH=master  # Defina o branch desejado (ou outro, se necessário)
+        ./compile.sh EXPERT="yes" CLEAN_LEVEL="none" KERNEL_ONLY="no" KERNEL_CONFIGURE="no" BRANCH="${BOARD}" # Atualize o comando conforme necessário
+    
+    - name: Upload compiled image
+      uses: actions/upload-artifact@v3
+      with:
+        name: armbian-image
+        path: ./output/images/
