@@ -24,7 +24,8 @@ jobs:
         cd build
         export BOARD=rk322x-box.tvb  # Defina a placa aqui
         export BRANCH=master  # Defina o branch desejado (ou outro, se necessário)
-        ./compile.sh EXPERT="yes" CLEAN_LEVEL="none" KERNEL_ONLY="no" KERNEL_CONFIGURE="no" BRANCH="${BOARD}" # Atualize o comando conforme necessário
+        cp ../build/config/kernel/linux-rk322x-legacy.config .config  # Copie sua configuração do kernel
+        ./compile.sh EXPERT="yes" CLEAN_LEVEL="none" KERNEL_ONLY="no" KERNEL_CONFIGURE="no" BRANCH="${BOARD}"
     
     - name: Upload compiled image
       uses: actions/upload-artifact@v3
