@@ -1,0 +1,32 @@
+name: Compile Armbian Image
+
+on:
+  push:
+    branches:
+      - main  # Define em qual branch o workflow será acionado
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Executa em uma máquina com Ubuntu mais recente
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Faz o checkout do código do repositório
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y git curl unzip make gcc
+
+    - name: Clone Armbian Build Repository
+      run: |
+        git clone https://github.com/armbian/build.git
+        cd build
+        cp config/kernel/linux-rk322x-legacy.config config/kernel/linux-rk322x-legacy.config
+        ./compile.sh EXPERT="yes" CLEAN_LEVEL="none" KERNEL_ONLY="no" KERNEL_CONFIGURE="no"
+    
+    - name: Upload compiled image
+      uses: actions/upload-artifact@v3
+      with:
+        name: armbian-image
+        path: ./build/output/images/  # Diretório onde as imagens são salvas
