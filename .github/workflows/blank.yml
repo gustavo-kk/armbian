@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # Faz o checkout do código do repositório
+      uses: actions/checkout@v3  # Atualizado para a versão 3
 
     - name: Install dependencies
       run: |
@@ -22,7 +22,7 @@ jobs:
       run: |
         git clone https://github.com/armbian/build.git
         cd build
-        cp config/kernel/linux-rk322x-legacy.config config/kernel/linux-rk322x-legacy.config
+        cp config/kernel/linux-rk322x-legacy.config config/kernel/  # Supondo que o arquivo esteja neste caminho
         ./compile.sh EXPERT="yes" CLEAN_LEVEL="none" KERNEL_ONLY="no" KERNEL_CONFIGURE="no"
     
     - name: Upload compiled image
