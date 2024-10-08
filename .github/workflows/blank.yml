@@ -23,7 +23,7 @@ jobs:
         git clone https://github.com/armbian/build.git
         cd build
         # Define a placa de destino como rk329a
-        export BOARD=rk329a
+        export BOARD=rk332x
         ./compile.sh EXPERT="yes" CLEAN_LEVEL="none" KERNEL_ONLY="no" KERNEL_CONFIGURE="no" BRANCH="${BOARD}"
     
     - name: Upload compiled image
