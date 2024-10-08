@@ -22,10 +22,14 @@ jobs:
       run: |
         git clone https://github.com/armbian/build.git
         cd build
-        export BOARD=rk322x-box.tvb  # Defina a placa aqui
+        export BOARD=rk322x-box  # Defina a placa aqui
         export BRANCH=master  # Defina o branch desejado (ou outro, se necessário)
-        cp ../build/config/kernel/linux-rk322x-legacy.config .config  # Copie sua configuração do kernel
-        ./compile.sh EXPERT="yes" CLEAN_LEVEL="none" KERNEL_ONLY="no" KERNEL_CONFIGURE="no" BRANCH="${BOARD}"
+
+        # Copie sua configuração de kernel para o local correto
+        cp ../build/config/kernel/linux-rk322x-legacy.config .config
+
+        # Execute a compilação não interativa
+        ./compile.sh EXPERT="yes" CLEAN_LEVEL="none" KERNEL_ONLY="no" KERNEL_CONFIGURE="no" BRANCH="${BOARD}" CONFIGURE_ONLY="no"  # Isso deve evitar a interação
     
     - name: Upload compiled image
       uses: actions/upload-artifact@v3
