@@ -1,17 +1,17 @@
-name: Compile Armbian Server Image
+name: Compile Armbian Image
 
 on:
   push:
     branches:
-      - main  # A branch que aciona o workflow
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Executa em uma máquina Ubuntu
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # Usando a versão 3
+      uses: actions/checkout@v3
 
     - name: Install dependencies
       run: |
@@ -22,16 +22,18 @@ jobs:
       run: |
         git clone https://github.com/armbian/build.git
         cd build
-        export BOARD=rk322x-box  # Defina a placa aqui
-        export RELEASE=focal  # Defina a base como focal (Ubuntu 20.04)
-        export KERNEL_TARGET="legacy"  # Altere se necessário
-        export BUILD_TYPE="server"  # Definindo que é para servidor
+        # Defina variáveis de ambiente
+        export BOARD=rk322x-box
+        export RELEASE=focal
+        export KERNEL_TARGET="legacy"
+        export KERNEL_VERSION="4.4.194"  # Ajuste conforme necessário
+        export BUILD_TYPE="server"
 
-        # Execute a compilação não interativa
-        ./compile.sh EXPERT="yes" CLEAN_LEVEL="none" KERNEL_ONLY="no" KERNEL_CONFIGURE="no" BOARD="${BOARD}" RELEASE="${RELEASE}" KERNEL_TARGET="${KERNEL_TARGET}" BUILD_TYPE="${BUILD_TYPE}"  # Isso deve evitar a interação
+        # Executar a compilação não interativa
+        ./compile.sh EXPERT="yes" CLEAN_LEVEL="none" KERNEL_ONLY="no" KERNEL_CONFIGURE="no" BOARD="${BOARD}" RELEASE="${RELEASE}" KERNEL_TARGET="${KERNEL_TARGET}" KERNEL_VERSION="${KERNEL_VERSION}" BUILD_TYPE="${BUILD_TYPE}"
 
     - name: Upload compiled image
       uses: actions/upload-artifact@v3
       with:
-        name: armbian-server-image
+        name: armbian-image
         path: ./output/images/
