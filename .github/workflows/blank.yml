@@ -16,14 +16,14 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y git curl unzip make gcc docker.io
+        sudo apt-get install -y git curl unzip make gcc
+        sudo apt-get install -f  # Corrigir dependências quebradas, se houver
 
     - name: Clone Armbian Build Repository
       run: |
         git clone https://github.com/armbian/build.git
         cd build
-        # Define a placa de destino como rk329a
-        export BOARD=rk332x
+        export BOARD=rk329a
         ./compile.sh EXPERT="yes" CLEAN_LEVEL="none" KERNEL_ONLY="no" KERNEL_CONFIGURE="no" BRANCH="${BOARD}"
     
     - name: Upload compiled image
